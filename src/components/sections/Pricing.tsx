@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
-import { pricing, siteConfig } from "@/lib/data";
+import { pricing, siteConfig, type PricingPlan } from "@/lib/data";
 
-// Bouton qui redirige vers le bulletin d'inscription PDF
-function SelectPlanButton({ plan }: { plan: typeof pricing[0] }) {
+// Bouton qui redirige vers le bulletin / la fiche d'inscription PDF
+function SelectPlanButton({ plan }: { plan: PricingPlan }) {
   if (plan.equipment) return null;
 
   const pdfUrl = plan.pdf || "/inscription.pdf";
@@ -20,7 +20,7 @@ function SelectPlanButton({ plan }: { plan: typeof pricing[0] }) {
             : "border-2 border-white hover:bg-white hover:text-black text-white"
         }`}
       >
-        Choisir cette formule
+        {plan.ctaLabel ?? "Choisir cette formule"}
       </a>
     </div>
   );
@@ -44,7 +44,7 @@ export default function Pricing() {
         </div>
 
         {/* Pricing Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {pricing.map((plan) => (
             <div
               key={plan.id}

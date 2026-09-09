@@ -158,8 +158,22 @@ export function getCoachBySlug(slug: string): Coach | undefined {
   return coaches.find((coach) => coach.slug === slug);
 }
 
+export type PricingPlan = {
+  id: number;
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  equipment: boolean;
+  popular: boolean;
+  pdf: string | null;
+  /** Libellé du bouton d'action (défaut : « Choisir cette formule ») */
+  ctaLabel?: string;
+};
+
 /** Tarifs et forfaits disponibles */
-export const pricing = [
+export const pricing: PricingPlan[] = [
   {
     id: 1,
     name: "Équipement",
@@ -188,12 +202,13 @@ export const pricing = [
       "Accès zone musculation",
       "Cours collectifs coaché",
     ],
+    equipment: false,
     popular: true,
     pdf: "/inscription.pdf",
   },
   {
     id: 3,
-    name: "Pack enfant",
+    name: "Pack enfant -14 ans",
     price: "385€",
     period: "/an",
     description: "Section de 6 à 14 ans",
@@ -202,8 +217,44 @@ export const pricing = [
       "Encadrement certifié",
       "Ambiance ludique et sécurisée",
     ],
+    equipment: false,
     popular: false,
     pdf: "/inscription-14ans.pdf",
+  },
+  {
+    id: 4,
+    name: "Jiu-Jitsu Brésilien",
+    price: "dès 200€",
+    period: "/an",
+    description: "Team Sardella — Christian Sardella (ceinture noire)",
+    features: [
+      "Enfant : 200€ + licence 55€",
+      "Adulte : 420€ + licence + 70€ de frais",
+      "Assurance comprise",
+      "Passeport sportif 35€ (compétition JJB / grappling)",
+      "Certificat médical + 2 photos",
+    ],
+    equipment: false,
+    popular: false,
+    pdf: "/inscription-jjb.pdf",
+    ctaLabel: "Télécharger la fiche d'inscription",
+  },
+  {
+    id: 5,
+    name: "Boxe Thaï / Muay Thaï",
+    price: "435€",
+    period: "/an",
+    description: "Elite Boxing 67 — Steeve Valente",
+    features: [
+      "Accès à tous les cours",
+      "Paiement comptant ou 4× par chèque",
+      "Formule Cardio Bag : 300€/an",
+      "Pièce d'identité + certificat médical",
+    ],
+    equipment: false,
+    popular: false,
+    pdf: "/inscription-boxe-thai.pdf",
+    ctaLabel: "Télécharger la fiche d'inscription",
   },
 ];
 
