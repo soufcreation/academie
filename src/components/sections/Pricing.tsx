@@ -48,11 +48,15 @@ export default function Pricing() {
           {pricing.map((plan) => (
             <div
               key={plan.id}
-              className={`relative p-8 border-2 flex flex-col ${
+              className={`relative p-8 border-2 flex flex-col transition-all hover:border-gray-600 ${
                 plan.popular
                   ? "border-[#e63030] bg-gray-900/50"
                   : "border-gray-800 bg-gray-900/30"
-              } transition-all hover:border-gray-600`}
+              } ${
+                // Sur mobile/tablette : la formule populaire remonte en 1ère position,
+                // l'équipement descend en dernier. Ordre normal rétabli en ≥ lg.
+                plan.popular ? "order-first lg:order-none" : ""
+              } ${plan.equipment ? "order-last lg:order-none" : ""}`}
             >
               {/* Popular Badge */}
               {plan.popular && (
