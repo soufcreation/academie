@@ -168,8 +168,6 @@ export type PricingPlan = {
   equipment: boolean;
   popular: boolean;
   pdf: string | null;
-  /** Libellé du bouton d'action (défaut : « Choisir cette formule ») */
-  ctaLabel?: string;
 };
 
 /** Tarifs et forfaits disponibles */
@@ -235,7 +233,6 @@ export const pricing: PricingPlan[] = [
     equipment: false,
     popular: false,
     pdf: "/inscription-jjb.pdf",
-    ctaLabel: "Télécharger la fiche d'inscription",
   },
   {
     id: 5,
@@ -252,7 +249,6 @@ export const pricing: PricingPlan[] = [
     equipment: false,
     popular: false,
     pdf: "/inscription-boxe-thai.pdf",
-    ctaLabel: "Télécharger la fiche d'inscription",
   },
 ];
 

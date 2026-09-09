@@ -20,7 +20,7 @@ function SelectPlanButton({ plan }: { plan: PricingPlan }) {
             : "border-2 border-white hover:bg-white hover:text-black text-white"
         }`}
       >
-        {plan.ctaLabel ?? "Choisir cette formule"}
+        Choisir cette formule
       </a>
     </div>
   );
