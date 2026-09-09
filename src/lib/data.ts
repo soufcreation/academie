@@ -244,10 +244,10 @@ export const pricing: PricingPlan[] = [
     period: "/an",
     description: "Elite Boxing 67 — Steeve Valente",
     features: [
-      "Accès à tous les cours",
-      "Paiement comptant ou 4× par chèque",
+      "Accès au cours en rouge du planning",
+      "Accès zone musculation",
+      "Cours collectifs coaché",
       "Formule Cardio Bag : 300€/an",
-      "Pièce d'identité + certificat médical",
     ],
     equipment: false,
     popular: false,
