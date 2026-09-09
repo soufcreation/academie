@@ -18,19 +18,7 @@ function MapPlaceholder() {
 }
 
 export default function CookieBanner() {
-  const { showBanner, isReady, acceptAll, acceptNecessary } = useCookieConsent();
-
-  const handleAccept = () => {
-    acceptAll();
-    window.location.reload();
-  };
-
-  const handleRefuse = () => {
-    acceptNecessary();
-    window.location.reload();
-  };
-
-  if (!isReady) return null;
+  const { showBanner, acceptAll, acceptNecessary } = useCookieConsent();
 
   if (!showBanner) return null;
 
@@ -57,13 +45,13 @@ export default function CookieBanner() {
           </div>
           <div className="flex gap-3">
             <button
-              onClick={handleRefuse}
+              onClick={acceptNecessary}
               className="px-4 py-2 text-sm text-gray-400 hover:text-white border border-gray-700 hover:border-gray-500 rounded-lg transition-colors"
             >
               Refuser
             </button>
             <button
-              onClick={handleAccept}
+              onClick={acceptAll}
               className="px-4 py-2 text-sm bg-[#e63030] hover:bg-[#d42929] text-white rounded-lg transition-colors"
             >
               Accepter

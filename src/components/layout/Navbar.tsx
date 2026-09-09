@@ -64,10 +64,10 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-3">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <div className="relative w-10 h-10">
+            <Link href="/" className="flex items-center gap-2 min-w-0">
+              <div className="relative w-10 h-10 shrink-0">
                 <Image
                   src="/logo.png"
                   alt=""
@@ -76,7 +76,7 @@ export default function Navbar() {
                 />
               </div>
               <span
-                className="text-xl font-bold tracking-wider"
+                className="text-sm sm:text-base lg:text-xl font-bold tracking-wider truncate"
                 style={{ fontFamily: "var(--font-bebas)" }}
               >
                 ACADÉMIE EUROPÉENNE DES SPORTS
@@ -112,7 +112,7 @@ export default function Navbar() {
             {/* Mobile Menu Button */}
             <button
               type="button"
-              className="lg:hidden w-10 h-10 flex items-center justify-center text-white touch-manipulation active:scale-95 transition-all cursor-pointer bg-black/90 border border-gray-700 hover:border-gray-500 rounded-xl"
+              className="lg:hidden shrink-0 w-10 h-10 flex items-center justify-center text-white touch-manipulation active:scale-95 transition-all cursor-pointer bg-black/90 border border-gray-700 hover:border-gray-500 rounded-xl"
               onClick={toggleMobileMenu}
               aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={isMobileMenuOpen}

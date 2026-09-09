@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 
 export type CookieConsent = {
   necessary: boolean;
@@ -17,47 +17,74 @@ const DEFAULT_CONSENT: CookieConsent = {
 
 const STORAGE_KEY = "cookie-consent";
 
-function loadStoredConsent(): CookieConsent | null {
-  if (typeof window === "undefined") return null;
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (!stored) return null;
-  try {
-    return JSON.parse(stored);
-  } catch {
-    return DEFAULT_CONSENT;
+// --- Store externe (localStorage) exposé via useSyncExternalStore -------------
+// Le rendu serveur renvoie toujours `null` (getServerSnapshot) ; le vrai
+// consentement n'est lu qu'après hydratation, sans mismatch serveur/client.
+
+const listeners = new Set<() => void>();
+
+function emitChange() {
+  for (const listener of listeners) listener();
+}
+
+function subscribe(callback: () => void): () => void {
+  listeners.add(callback);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === STORAGE_KEY) callback();
+  };
+  window.addEventListener("storage", onStorage);
+  return () => {
+    listeners.delete(callback);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+let cachedRaw: string | null = null;
+let cachedValue: CookieConsent | null = null;
+
+function getSnapshot(): CookieConsent | null {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (raw !== cachedRaw) {
+    cachedRaw = raw;
+    if (!raw) {
+      cachedValue = null;
+    } else {
+      try {
+        cachedValue = JSON.parse(raw) as CookieConsent;
+      } catch {
+        cachedValue = DEFAULT_CONSENT;
+      }
+    }
   }
+  return cachedValue;
+}
+
+function getServerSnapshot(): CookieConsent | null {
+  return null;
 }
 
 export function useCookieConsent() {
-  // Chargé une seule fois, de façon synchrone au montage (pas de setState dans un effet)
-  const [consent, setConsentState] = useState<CookieConsent | null>(loadStoredConsent);
+  const consent = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [showBanner, setShowBanner] = useState(false);
 
-  // Afficher le banner après un court délai si aucun consentement n'est enregistré
+  // Afficher le bandeau après un court délai si aucun choix n'a été enregistré
   useEffect(() => {
     if (consent) return;
-    const timer = setTimeout(() => {
-      setShowBanner(true);
-    }, 1500);
+    const timer = setTimeout(() => setShowBanner(true), 1500);
     return () => clearTimeout(timer);
   }, [consent]);
 
   const saveConsent = useCallback((newConsent: CookieConsent) => {
-    const consentWithTimestamp = {
-      ...newConsent,
-      timestamp: Date.now(),
-    };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(consentWithTimestamp));
-    setConsentState(consentWithTimestamp);
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ ...newConsent, timestamp: Date.now() }),
+    );
+    emitChange();
     setShowBanner(false);
   }, []);
 
   const acceptAll = useCallback(() => {
-    saveConsent({
-      necessary: true,
-      analytics: true,
-      marketing: true,
-    });
+    saveConsent({ necessary: true, analytics: true, marketing: true });
   }, [saveConsent]);
 
   const acceptNecessary = useCallback(() => {
@@ -66,7 +93,6 @@ export function useCookieConsent() {
 
   return {
     showBanner,
-    isReady: true,
     acceptAll,
     acceptNecessary,
     hasAnalytics: consent?.analytics ?? false,

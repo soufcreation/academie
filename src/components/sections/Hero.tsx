@@ -44,7 +44,8 @@ export default function Hero() {
           className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-wider mb-6"
           style={{ fontFamily: "var(--font-bebas)" }}
         >
-          ACADÉMIE EUROPÉENNE <span className="text-[#e63030]">DES SPORTS</span>
+          ACADÉMIE EUROPÉENNE{" "}
+          <span className="text-[#e63030] whitespace-nowrap">DES SPORTS</span>
         </h1>
 
         {/* Tagline */}

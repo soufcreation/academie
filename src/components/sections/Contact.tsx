@@ -34,7 +34,7 @@ export default function Contact() {
                 <div className="flex-shrink-0 w-12 h-12 bg-gray-900 flex items-center justify-center">
                   <MapPin className="w-5 h-5 text-[#e63030]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-lg font-semibold tracking-wider mb-1" style={{ fontFamily: "var(--font-bebas)" }}>
                     ADRESSE
                   </h3>
@@ -46,7 +46,7 @@ export default function Contact() {
                 <div className="flex-shrink-0 w-12 h-12 bg-gray-900 flex items-center justify-center">
                   <Phone className="w-5 h-5 text-[#e63030]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-lg font-semibold tracking-wider mb-1" style={{ fontFamily: "var(--font-bebas)" }}>
                     TÉLÉPHONE
                   </h3>
@@ -60,11 +60,11 @@ export default function Contact() {
                 <div className="flex-shrink-0 w-12 h-12 bg-gray-900 flex items-center justify-center">
                   <Mail className="w-5 h-5 text-[#e63030]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-lg font-semibold tracking-wider mb-1" style={{ fontFamily: "var(--font-bebas)" }}>
                     EMAIL
                   </h3>
-                  <a href={`mailto:${siteConfig.email}`} className="text-gray-400 hover:text-white transition-colors">
+                  <a href={`mailto:${siteConfig.email}`} className="text-gray-400 hover:text-white transition-colors break-words">
                     {siteConfig.email}
                   </a>
                 </div>
@@ -74,7 +74,7 @@ export default function Contact() {
                 <div className="flex-shrink-0 w-12 h-12 bg-gray-900 flex items-center justify-center">
                   <Clock className="w-5 h-5 text-[#e63030]" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <h3 className="text-lg font-semibold tracking-wider mb-1" style={{ fontFamily: "var(--font-bebas)" }}>
                     HORAIRES
                   </h3>
