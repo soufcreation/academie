@@ -3,6 +3,7 @@
 import { MapPin, Phone, Mail, Clock, Cookie } from "lucide-react";
 import Link from "next/link";
 import { siteConfig, socialLinks, navigation } from "@/lib/data";
+import EmailLink from "@/components/EmailLink";
 import { FacebookIcon, InstagramIcon } from "@/components/SocialIcons";
 
 // Social link buttons with SVG icons
@@ -29,8 +30,6 @@ function SocialLink({
 }
 
 export default function Footer() {
-  const [emailUser, emailDomain] = siteConfig.email.split("@");
-
   return (
     <footer className="bg-black border-t border-gray-900">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -102,19 +101,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center justify-center gap-3">
                 <Mail className="w-5 h-5 flex-shrink-0 text-[#e63030]" />
-                {/* L'adresse ne contient aucune espace : sans `break-words` elle déborde
-                    du pied de page, et sans `min-w-0` elle refuse de rétrécir, un élément
-                    flex ayant `min-width: auto` par défaut. Le <wbr> place la coupure
-                    devant l'arobase plutôt qu'au milieu d'un mot — ce qui suppose que la
-                    partie locale tienne sur une ligne, d'où le `text-xs`. */}
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="min-w-0 break-words text-xs hover:text-white transition-colors"
-                >
-                  {emailUser}
-                  <wbr />
-                  {`@${emailDomain}`}
-                </a>
+                <EmailLink className="text-xs hover:text-white transition-colors" />
               </li>
               <li className="flex items-center justify-center gap-3">
                 <Clock className="w-5 h-5 flex-shrink-0 text-[#e63030]" />

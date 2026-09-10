@@ -2,6 +2,7 @@
 
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { siteConfig } from "@/lib/data";
+import EmailLink from "@/components/EmailLink";
 import VideoJSPlayer from "@/components/VideoJSPlayer";
 import { useCookieConsent } from "@/hooks/useCookieConsent";
 import { MapPlaceholder } from "@/components/layout/CookieBanner";
@@ -64,9 +65,7 @@ export default function Contact() {
                   <h3 className="text-lg font-semibold tracking-wider mb-1" style={{ fontFamily: "var(--font-bebas)" }}>
                     EMAIL
                   </h3>
-                  <a href={`mailto:${siteConfig.email}`} className="text-gray-400 hover:text-white transition-colors break-words">
-                    {siteConfig.email}
-                  </a>
+                  <EmailLink className="text-gray-400 hover:text-white transition-colors" />
                 </div>
               </div>
 
