@@ -33,14 +33,13 @@ export default function PlanningBoard() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Filtres par offre */}
         <div className="mb-8">
-          <p id="filtre-offre" className="text-gray-400 text-sm mb-3">
+          <p id="filtre-offre" className="text-gray-400 text-xs mb-2">
             Afficher les cours inclus dans une offre :
           </p>
-          {/* Une seule ligne défilante sur mobile, pour ne pas repousser le planning hors de l'écran */}
           <div
             role="group"
             aria-labelledby="filtre-offre"
-            className="flex gap-2 overflow-x-auto pb-1 lg:flex-wrap lg:overflow-visible lg:pb-0"
+            className="flex flex-wrap gap-1.5"
           >
             <FilterButton isActive={activeSlug === null} onClick={() => selectOffer(null)}>
               Toutes les offres
@@ -52,7 +51,7 @@ export default function PlanningBoard() {
                 onClick={() => selectOffer(plan.slug)}
               >
                 {plan.name}
-                <span className="ml-2 opacity-70">
+                <span className="ml-1.5 opacity-70">
                   {plan.price}
                   {plan.period}
                 </span>
@@ -136,7 +135,7 @@ function FilterButton({ isActive, onClick, children }: FilterButtonProps) {
       type="button"
       onClick={onClick}
       aria-pressed={isActive}
-      className={`btn-interactive shrink-0 whitespace-nowrap border-2 px-4 py-2 text-sm font-semibold transition-colors ${
+      className={`shrink-0 cursor-pointer whitespace-nowrap border px-2.5 py-1 text-xs font-medium transition-colors active:scale-95 ${
         isActive
           ? "border-[#e63030] bg-[#e63030] text-white"
           : "border-gray-700 text-gray-300 hover:border-white hover:text-white"
