@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   isSessionIncluded,
@@ -14,6 +15,19 @@ import { colorStyles } from "./colors";
 
 export default function PlanningBoard() {
   const { activeSlug, selectOffer } = useOfferFilter();
+  const filterBarRef = useRef<HTMLDivElement>(null);
+
+  // Sur le bandeau défilant du mobile, l'offre active peut se trouver hors
+  // écran à l'arrivée par lien depuis les tarifs : on la ramène au centre.
+  // On agit sur scrollLeft plutôt que scrollIntoView, qui ferait aussi
+  // défiler la page verticalement.
+  useEffect(() => {
+    const bar = filterBarRef.current;
+    const active = bar?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (!bar || !active) return;
+
+    bar.scrollLeft = active.offsetLeft - (bar.clientWidth - active.offsetWidth) / 2;
+  }, [activeSlug]);
 
   function sessionState(session: PlanningSession): SessionState {
     if (!activeSlug) return "neutral";
@@ -36,10 +50,12 @@ export default function PlanningBoard() {
           <p id="filtre-offre" className="text-gray-400 text-[10px] mb-1.5 lg:text-sm lg:mb-3">
             Afficher les cours inclus dans une offre :
           </p>
+          {/* Bandeau défilant sur téléphone, boutons répartis sur une ligne sur ordinateur */}
           <div
+            ref={filterBarRef}
             role="group"
             aria-labelledby="filtre-offre"
-            className="flex flex-wrap gap-1 lg:gap-2"
+            className="flex gap-1 overflow-x-auto pb-1 lg:flex-wrap lg:gap-2 lg:overflow-visible lg:pb-0"
           >
             <FilterButton isActive={activeSlug === null} onClick={() => selectOffer(null)}>
               Toutes les offres
