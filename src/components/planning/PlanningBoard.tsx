@@ -36,7 +36,12 @@ export default function PlanningBoard() {
           <p id="filtre-offre" className="text-gray-400 text-sm mb-3">
             Afficher les cours inclus dans une offre :
           </p>
-          <div role="group" aria-labelledby="filtre-offre" className="flex flex-wrap gap-2">
+          {/* Une seule ligne défilante sur mobile, pour ne pas repousser le planning hors de l'écran */}
+          <div
+            role="group"
+            aria-labelledby="filtre-offre"
+            className="flex gap-2 overflow-x-auto pb-1 lg:flex-wrap lg:overflow-visible lg:pb-0"
+          >
             <FilterButton isActive={activeSlug === null} onClick={() => selectOffer(null)}>
               Toutes les offres
             </FilterButton>
@@ -69,31 +74,37 @@ export default function PlanningBoard() {
           </div>
         )}
 
-        {/* Grille hebdomadaire */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-4">
-          {planningDays.map((day) => (
-            <div key={day.name}>
-              <h2
-                className="mb-3 bg-[#e63030] py-1.5 text-center text-xl italic tracking-wider text-white"
-                style={{ fontFamily: "var(--font-bebas)" }}
-              >
-                {day.name}
-              </h2>
-              {day.sessions.length === 0 ? (
-                <p className="border border-gray-800 py-4 text-center text-sm text-gray-600">Fermé</p>
-              ) : (
-                <ul className="space-y-2">
-                  {day.sessions.map((session) => (
-                    <SessionCard
-                      key={`${session.start}-${session.label}`}
-                      session={session}
-                      state={sessionState(session)}
-                    />
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
+        {/* Grille hebdomadaire.
+            Le mobile garde la forme « semaine » du bureau et défile
+            horizontalement : à 375px, 7 colonnes tiendraient dans l'écran mais
+            le texte deviendrait illisible. */}
+        <p className="mb-2 text-xs text-gray-500 lg:hidden">Faites glisser le planning horizontalement →</p>
+        <div className="overflow-x-auto pb-3 lg:overflow-visible lg:pb-0">
+          <div className="grid grid-cols-7 gap-3 min-w-[1120px] lg:min-w-0 lg:gap-4">
+            {planningDays.map((day) => (
+              <div key={day.name}>
+                <h2
+                  className="mb-3 bg-[#e63030] py-1.5 text-center text-xl italic tracking-wider text-white"
+                  style={{ fontFamily: "var(--font-bebas)" }}
+                >
+                  {day.name}
+                </h2>
+                {day.sessions.length === 0 ? (
+                  <p className="border border-gray-800 py-4 text-center text-sm text-gray-600">Fermé</p>
+                ) : (
+                  <ul className="space-y-2">
+                    {day.sessions.map((session) => (
+                      <SessionCard
+                        key={`${session.start}-${session.label}`}
+                        session={session}
+                        state={sessionState(session)}
+                      />
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Légende */}
@@ -125,7 +136,7 @@ function FilterButton({ isActive, onClick, children }: FilterButtonProps) {
       type="button"
       onClick={onClick}
       aria-pressed={isActive}
-      className={`btn-interactive border-2 px-4 py-2 text-sm font-semibold transition-colors ${
+      className={`btn-interactive shrink-0 whitespace-nowrap border-2 px-4 py-2 text-sm font-semibold transition-colors ${
         isActive
           ? "border-[#e63030] bg-[#e63030] text-white"
           : "border-gray-700 text-gray-300 hover:border-white hover:text-white"
