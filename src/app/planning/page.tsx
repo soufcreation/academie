@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { Metadata } from "next";
+import PlanningBoard from "@/components/planning/PlanningBoard";
 
 export const metadata: Metadata = {
   title: "Planning des Cours | Académie Européenne des Sports",
@@ -24,21 +24,7 @@ export default function PlanningPage() {
         </div>
       </section>
 
-      {/* Planning Image */}
-      <section className="py-12 bg-black">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="relative w-full">
-            <Image
-              src="/planning.png"
-              alt="Planning hebdomadaire des cours"
-              width={1200}
-              height={1600}
-              className="w-full h-auto"
-              unoptimized
-            />
-          </div>
-        </div>
-      </section>
+      <PlanningBoard />
 
       {/* Info */}
       <section className="py-12 bg-gray-950">

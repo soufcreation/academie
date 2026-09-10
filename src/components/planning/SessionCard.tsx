@@ -1,0 +1,54 @@
+import { formatHour, planningCategories, type PlanningSession } from "@/lib/planning";
+import { colorStyles } from "./colors";
+
+/**
+ * `neutral` : aucune offre sélectionnée.
+ * `included` / `excluded` : une offre est sélectionnée et ce cours y est,
+ * ou non, compris.
+ */
+export type SessionState = "neutral" | "included" | "excluded";
+
+const STATE_LABELS: Record<SessionState, string | null> = {
+  neutral: null,
+  included: "Inclus dans cette offre",
+  excluded: "Non inclus dans cette offre",
+};
+
+type SessionCardProps = {
+  session: PlanningSession;
+  state: SessionState;
+};
+
+export default function SessionCard({ session, state }: SessionCardProps) {
+  const { color } = planningCategories[session.category];
+  const styles = colorStyles[color];
+  const stateLabel = STATE_LABELS[state];
+
+  return (
+    <li
+      className={`relative overflow-hidden border px-3 py-2.5 transition-[opacity,filter,transform,box-shadow] duration-300 ${styles.surface} ${
+        state === "included" ? `ring-2 ring-white/70 scale-[1.02] ${styles.glow}` : ""
+      } ${state === "excluded" ? "opacity-25 grayscale" : ""}`}
+    >
+      {/* Reflet des cours inclus */}
+      {state === "included" && (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/35 via-white/5 to-black/25"
+        />
+      )}
+
+      <div className="relative">
+        <p className="text-[11px] font-semibold tracking-wide text-white/85">
+          <time dateTime={session.start}>{formatHour(session.start)}</time>
+          {" – "}
+          <time dateTime={session.end}>{formatHour(session.end)}</time>
+        </p>
+        <p className="text-sm font-bold leading-tight text-white">{session.label}</p>
+        {session.note && <p className="mt-0.5 text-[11px] leading-tight text-white/75">{session.note}</p>}
+        {/* Le filtrage ne doit pas reposer sur la seule couleur */}
+        {stateLabel && <span className="sr-only">{stateLabel}</span>}
+      </div>
+    </li>
+  );
+}

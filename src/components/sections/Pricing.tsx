@@ -90,6 +90,18 @@ export default function Pricing() {
 
               {/* Features */}
               <ul className="space-y-4 mb-8">
+                {/* L'accès au planning est un lien : il ouvre le planning déjà filtré sur l'offre */}
+                {plan.planningLabel && (
+                  <li className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-[#e63030] flex-shrink-0 mt-0.5" />
+                    <Link
+                      href={`/planning/?offre=${plan.slug}`}
+                      className="text-[#e63030] hover:text-white text-sm underline"
+                    >
+                      {plan.planningLabel}
+                    </Link>
+                  </li>
+                )}
                 {plan.features.map((feature, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-[#e63030] flex-shrink-0 mt-0.5" />

@@ -158,13 +158,24 @@ export function getCoachBySlug(slug: string): Coach | undefined {
   return coaches.find((coach) => coach.slug === slug);
 }
 
+/** Identifiant d'offre, repris dans l'URL du planning filtré */
+export type PricingSlug =
+  | "equipement"
+  | "pack-adulte"
+  | "pack-enfant"
+  | "jjb"
+  | "boxe-thai";
+
 export type PricingPlan = {
   id: number;
+  slug: PricingSlug;
   name: string;
   price: string;
   period: string;
   description: string;
   features: string[];
+  /** Libellé du lien vers le planning filtré sur cette offre, null si sans objet */
+  planningLabel: string | null;
   equipment: boolean;
   popular: boolean;
   pdf: string | null;
@@ -174,6 +185,7 @@ export type PricingPlan = {
 export const pricing: PricingPlan[] = [
   {
     id: 1,
+    slug: "equipement",
     name: "Équipement",
     price: "80€",
     period: "",
@@ -185,28 +197,31 @@ export const pricing: PricingPlan[] = [
       "Coquille",
       "Protège tibias",
     ],
+    planningLabel: null,
     equipment: true,
     popular: false,
     pdf: null,
   },
   {
     id: 2,
+    slug: "pack-adulte",
     name: "Pack adulte +14 ans",
     price: "485€",
     period: "/an",
     description: "Boxe anglaise / MMA",
     features: [
-      "Accès au cours en noir du planning",
       "Accès zone musculation",
       "Cours collectifs coaché",
       "Certificat médical obligatoire",
     ],
+    planningLabel: "Accès au cours en noir du planning",
     equipment: false,
     popular: true,
     pdf: "/inscription.pdf",
   },
   {
     id: 3,
+    slug: "pack-enfant",
     name: "Pack enfant -14 ans",
     price: "385€",
     period: "/an",
@@ -218,39 +233,42 @@ export const pricing: PricingPlan[] = [
       "Ambiance ludique et sécurisée",
       "Certificat médical obligatoire",
     ],
+    planningLabel: "Accès aux cours 6 à 14 ans du planning",
     equipment: false,
     popular: false,
     pdf: "/inscription-14ans.pdf",
   },
   {
     id: 4,
+    slug: "jjb",
     name: "Jiu-Jitsu Brésilien",
     price: "255€",
     period: "/an",
     description: "Team Sardella — Christian Sardella (ceinture noire)",
     features: [
-      "Accès au cours en vert du planning",
       "Accès zone musculation",
       "Cours collectifs coaché",
       "Certificat médical obligatoire",
     ],
+    planningLabel: "Accès au cours en vert du planning",
     equipment: false,
     popular: false,
     pdf: "/inscription-jjb.pdf",
   },
   {
     id: 5,
+    slug: "boxe-thai",
     name: "Boxe Thaï / Muay Thaï",
     price: "435€",
     period: "/an",
     description: "Elite Boxing 67 — Steeve Valente",
     features: [
-      "Accès au cours en rouge du planning",
       "Accès zone musculation",
       "Cours collectifs coaché",
       "Formule Cardio Bag : 300€/an",
       "Certificat médical obligatoire",
     ],
+    planningLabel: "Accès au cours en rouge du planning",
     equipment: false,
     popular: false,
     pdf: "/inscription-boxe-thai.pdf",
