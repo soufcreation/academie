@@ -181,32 +181,53 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ================================
-   Planning - typographie fluide
+   Planning - mise a l'echelle proportionnelle
    ================================
-   La semaine entiere doit tenir a l'ecran sans defilement horizontal, donc
-   7 colonnes meme sur telephone (~45px chacune). Les tailles suivent la
-   largeur du viewport plutot que des paliers, pour rester lisibles partout. */
+   Le planning garde exactement les memes proportions de 375px a 1440px : il
+   devient simplement plus petit, comme l'affiche imprimee qu'on agrandit du
+   bout des doigts. Toutes les tailles sont donc exprimees en fraction de la
+   largeur du conteneur (cqw) plutot qu'en paliers.
+
+   Consequence recherchee : puisque les mots tiennent dans les colonnes sur
+   grand ecran, ils y tiennent a toutes les tailles. Aucune cesure, aucun mot
+   coupe - d'ou l'absence volontaire de hyphens / overflow-wrap ici. */
+.planning-scale {
+  container-type: inline-size;
+}
+
+.planning-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1.3cqw;
+}
+
 .planning-day {
-  font-size: clamp(0.625rem, 0.36rem + 1.1vw, 1.25rem);
+  font-size: 1.65cqw;
+  padding-block: 0.5cqw;
+  margin-bottom: 1cqw;
 }
 
-.planning-time {
-  font-size: clamp(0.4375rem, 0.28rem + 0.62vw, 0.6875rem);
-}
-
-.planning-label {
-  font-size: clamp(0.5rem, 0.33rem + 0.72vw, 0.875rem);
-  hyphens: auto;
-  /* Sans cela, « Entraînement » deborde de la colonne de 46px et se fait couper */
-  overflow-wrap: anywhere;
-}
-
-.planning-note {
-  font-size: clamp(0.4375rem, 0.3rem + 0.5vw, 0.6875rem);
-  hyphens: auto;
-  overflow-wrap: anywhere;
+.planning-sessions > li + li {
+  margin-top: 0.66cqw;
 }
 
 .planning-card {
-  padding: clamp(0.1875rem, 0.06rem + 0.5vw, 0.625rem);
+  padding: 0.82cqw;
+}
+
+.planning-time {
+  font-size: 0.9cqw;
+}
+
+.planning-label {
+  font-size: 1.15cqw;
+}
+
+.planning-note {
+  font-size: 0.9cqw;
+}
+
+.planning-closed {
+  font-size: 1.15cqw;
+  padding-block: 2cqw;
 }

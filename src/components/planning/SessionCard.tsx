@@ -39,12 +39,9 @@ export default function SessionCard({ session, state }: SessionCardProps) {
       )}
 
       <div className="relative">
-        {/* Les horaires s'empilent sur petit écran, où « 12h30 – 13h15 » ne tient pas sur une ligne */}
-        <p className="planning-time flex flex-col leading-tight font-semibold tracking-tight text-white/85 sm:flex-row sm:gap-1">
+        <p className="planning-time font-semibold leading-tight tracking-tight text-white/85">
           <time dateTime={session.start}>{formatHour(session.start)}</time>
-          <span aria-hidden="true" className="hidden sm:inline">
-            –
-          </span>
+          {" – "}
           <time dateTime={session.end}>{formatHour(session.end)}</time>
         </p>
         <p className="planning-label font-bold leading-tight text-white">{session.label}</p>
