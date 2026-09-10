@@ -81,6 +81,8 @@ export type PlanningSession = {
 
 export type PlanningDay = {
   name: string;
+  /** Abréviation affichée sur petit écran, où le nom complet ne tient pas */
+  short: string;
   sessions: PlanningSession[];
 };
 
@@ -88,6 +90,7 @@ export type PlanningDay = {
 export const planningDays: PlanningDay[] = [
   {
     name: "Lundi",
+    short: "Lun",
     sessions: [
       { start: "12:30", end: "13:15", label: "Bag / Cardio", category: "cardio-thai" },
       { start: "12:30", end: "14:00", label: "Jiu-Jitsu Brésilien", note: "Salle Annexe", category: "jjb" },
@@ -100,6 +103,7 @@ export const planningDays: PlanningDay[] = [
   },
   {
     name: "Mardi",
+    short: "Mar",
     sessions: [
       { start: "12:30", end: "13:15", label: "Kick-boxing Muay Thaï", category: "kick-muay" },
       { start: "13:15", end: "14:15", label: "Entraînement libre", category: "libre" },
@@ -111,6 +115,7 @@ export const planningDays: PlanningDay[] = [
   },
   {
     name: "Mercredi",
+    short: "Mer",
     sessions: [
       { start: "12:15", end: "13:15", label: "Réservé cycle collège", category: "reserve" },
       { start: "14:00", end: "16:00", label: "Projet Collège des Gants et Crayons", category: "reserve" },
@@ -122,6 +127,7 @@ export const planningDays: PlanningDay[] = [
   },
   {
     name: "Jeudi",
+    short: "Jeu",
     sessions: [
       { start: "12:30", end: "14:00", label: "Jiu-Jitsu Brésilien", category: "jjb" },
       { start: "14:15", end: "17:15", label: "Entraînement libre", category: "libre" },
@@ -132,6 +138,7 @@ export const planningDays: PlanningDay[] = [
   },
   {
     name: "Vendredi",
+    short: "Ven",
     sessions: [
       { start: "12:30", end: "13:15", label: "Bag / Cardio", category: "cardio-thai" },
       { start: "13:15", end: "16:45", label: "Entraînement libre", category: "libre" },
@@ -143,6 +150,7 @@ export const planningDays: PlanningDay[] = [
   },
   {
     name: "Samedi",
+    short: "Sam",
     sessions: [
       { start: "09:00", end: "10:30", label: "Jiu-Jitsu Brésilien", note: "Compétiteurs", category: "jjb" },
       { start: "10:30", end: "11:30", label: "Jiu-Jitsu Brésilien", note: "Enfants", category: "jjb" },
@@ -154,6 +162,7 @@ export const planningDays: PlanningDay[] = [
   },
   {
     name: "Dimanche",
+    short: "Dim",
     sessions: [],
   },
 ];

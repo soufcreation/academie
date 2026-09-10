@@ -179,3 +179,34 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: Bebas Neue, sans-serif;
 }
+
+/* ================================
+   Planning - typographie fluide
+   ================================
+   La semaine entiere doit tenir a l'ecran sans defilement horizontal, donc
+   7 colonnes meme sur telephone (~45px chacune). Les tailles suivent la
+   largeur du viewport plutot que des paliers, pour rester lisibles partout. */
+.planning-day {
+  font-size: clamp(0.625rem, 0.36rem + 1.1vw, 1.25rem);
+}
+
+.planning-time {
+  font-size: clamp(0.4375rem, 0.28rem + 0.62vw, 0.6875rem);
+}
+
+.planning-label {
+  font-size: clamp(0.5rem, 0.33rem + 0.72vw, 0.875rem);
+  hyphens: auto;
+  /* Sans cela, « Entraînement » deborde de la colonne de 46px et se fait couper */
+  overflow-wrap: anywhere;
+}
+
+.planning-note {
+  font-size: clamp(0.4375rem, 0.3rem + 0.5vw, 0.6875rem);
+  hyphens: auto;
+  overflow-wrap: anywhere;
+}
+
+.planning-card {
+  padding: clamp(0.1875rem, 0.06rem + 0.5vw, 0.625rem);
+}

@@ -75,36 +75,34 @@ export default function PlanningBoard() {
         )}
 
         {/* Grille hebdomadaire.
-            Le mobile garde la forme « semaine » du bureau et défile
-            horizontalement : à 375px, 7 colonnes tiendraient dans l'écran mais
-            le texte deviendrait illisible. */}
-        <p className="mb-2 text-xs text-gray-500 lg:hidden">Faites glisser le planning horizontalement →</p>
-        <div className="overflow-x-auto pb-3 lg:overflow-visible lg:pb-0">
-          <div className="grid grid-cols-7 gap-3 min-w-[1120px] lg:min-w-0 lg:gap-4">
-            {planningDays.map((day) => (
-              <div key={day.name}>
-                <h2
-                  className="mb-3 bg-[#e63030] py-1.5 text-center text-xl italic tracking-wider text-white"
-                  style={{ fontFamily: "var(--font-bebas)" }}
-                >
-                  {day.name}
-                </h2>
-                {day.sessions.length === 0 ? (
-                  <p className="border border-gray-800 py-4 text-center text-sm text-gray-600">Fermé</p>
-                ) : (
-                  <ul className="space-y-2">
-                    {day.sessions.map((session) => (
-                      <SessionCard
-                        key={`${session.start}-${session.label}`}
-                        session={session}
-                        state={sessionState(session)}
-                      />
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
+            Les 7 jours restent visibles simultanément à toutes les tailles :
+            pas de défilement horizontal, la typographie se réduit à la place
+            (voir les classes .planning-* dans globals.css). */}
+        <div className="grid grid-cols-7 gap-1 sm:gap-2 lg:gap-4">
+          {planningDays.map((day) => (
+            <div key={day.name}>
+              <h2
+                className="planning-day mb-1 bg-[#e63030] py-1 text-center italic tracking-wider text-white sm:mb-2 lg:mb-3 lg:py-1.5"
+                style={{ fontFamily: "var(--font-bebas)" }}
+              >
+                <span className="sm:hidden">{day.short}</span>
+                <span className="hidden sm:inline">{day.name}</span>
+              </h2>
+              {day.sessions.length === 0 ? (
+                <p className="planning-note border border-gray-800 py-3 text-center text-gray-600">Fermé</p>
+              ) : (
+                <ul className="space-y-1 sm:space-y-2">
+                  {day.sessions.map((session) => (
+                    <SessionCard
+                      key={`${session.start}-${session.label}`}
+                      session={session}
+                      state={sessionState(session)}
+                    />
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Légende */}

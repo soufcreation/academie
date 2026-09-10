@@ -26,7 +26,7 @@ export default function SessionCard({ session, state }: SessionCardProps) {
 
   return (
     <li
-      className={`relative overflow-hidden border px-3 py-2.5 transition-[opacity,filter,transform,box-shadow] duration-300 ${styles.surface} ${
+      className={`planning-card relative overflow-hidden border transition-[opacity,filter,transform,box-shadow] duration-300 ${styles.surface} ${
         state === "included" ? `ring-2 ring-white/70 scale-[1.02] ${styles.glow}` : ""
       } ${state === "excluded" ? "opacity-25 grayscale" : ""}`}
     >
@@ -39,13 +39,16 @@ export default function SessionCard({ session, state }: SessionCardProps) {
       )}
 
       <div className="relative">
-        <p className="text-[11px] font-semibold tracking-wide text-white/85">
+        {/* Les horaires s'empilent sur petit écran, où « 12h30 – 13h15 » ne tient pas sur une ligne */}
+        <p className="planning-time flex flex-col leading-tight font-semibold tracking-tight text-white/85 sm:flex-row sm:gap-1">
           <time dateTime={session.start}>{formatHour(session.start)}</time>
-          {" – "}
+          <span aria-hidden="true" className="hidden sm:inline">
+            –
+          </span>
           <time dateTime={session.end}>{formatHour(session.end)}</time>
         </p>
-        <p className="text-sm font-bold leading-tight text-white">{session.label}</p>
-        {session.note && <p className="mt-0.5 text-[11px] leading-tight text-white/75">{session.note}</p>}
+        <p className="planning-label font-bold leading-tight text-white">{session.label}</p>
+        {session.note && <p className="planning-note mt-0.5 leading-tight text-white/75">{session.note}</p>}
         {/* Le filtrage ne doit pas reposer sur la seule couleur */}
         {stateLabel && <span className="sr-only">{stateLabel}</span>}
       </div>
